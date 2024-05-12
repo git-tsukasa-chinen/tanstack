@@ -14,10 +14,10 @@ const TanstackTable = () => {
 
   const rows: tRow[] = [
     { id: 1, firstName: 'Taro', lastName: 'Yamada', birth: '1992年12月4日', description:'', gender: '男性' },
-    { id: 2, firstName: '富士子', lastName: '鈴木', birth: '1993年3月9日', description:'', gender: '' },
+    { id: 2, firstName: '富士子・F', lastName: '鈴木', birth: '1993年3月9日', description:'', gender: '' },
     { id: 3, firstName: 'Daisuke', lastName: 'Saito', birth: 'February 18, 1994', description:"", gender: '' },
     { id: 4, firstName: 'John', lastName: 'Doo', birth: '1994年9月12日', description:"", gender: '' },
-    { id: 5, firstName: '一郎', lastName: '田中', birth: '1995年10月13日', description: "田中一郎さんは日本でよく使われる名前です。実在してるかは分かりません" },
+    { id: 5, firstName: 'じろう', lastName: '田中', birth: '1995年10月13日', description: "田中一郎さんは日本でよく使われる名前です。実在してるかは分かりません" },
     { id: 6, firstName: 'Syun', lastName: 'Oguri', birth: '1995年12月30日', description:"",  gender: '女性'  },
     { id: 7, firstName: '潤', lastName: '松本', birth: 'September 1, 1997', description:"", gender: '' },
     { id: 8, firstName: 'Kazuya', lastName: 'Ninomiya', birth: '1983年6月17日', description:"", gender: '' }
