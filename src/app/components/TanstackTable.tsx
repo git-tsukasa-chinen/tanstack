@@ -19,7 +19,7 @@ const TanstackTable = () => {
     { id: 4, firstName: 'John', lastName: 'Doo', birth: '1994年9月12日', description:"", gender: '' },
     { id: 5, firstName: 'じろう', lastName: '田中', birth: '1995年10月13日', description: "田中一郎さんは日本でよく使われる名前です。実在してるかは分かりません" },
     { id: 6, firstName: 'Syun', lastName: 'Oguri', birth: '1995年12月30日', description:"",  gender: '女性'  },
-    { id: 7, firstName: '潤', lastName: '松本', birth: 'September 1, 1997', description:"", gender: '' },
+    { id: 7, firstName: '潤ホゲホゲ', lastName: '松本', birth: 'September 1, 1997', description:"", gender: '' },
     { id: 8, firstName: 'Kazuya', lastName: 'Ninomiya', birth: '1983年6月17日', description:"", gender: '' }
   ];
 
