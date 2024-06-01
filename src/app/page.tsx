@@ -1,9 +1,20 @@
-import TanstackTable from "@/app/components/TanstackTable";
+"use client";
+import TanStackTable from "./components/TanStackTable"
+import {columns, rows} from './components/TanStackTable/Data'
 
 export default function Home() {
   return (
     <main>
-      <TanstackTable />
+      <TanStackTable
+        data={rows}
+        columns={columns}
+        checkboxSelection={true}
+        enableMultiRowSelection={true}
+        enableRowSelection={() => true}
+        enableRowSelectionOnClick={true}
+        enableSorting={true}
+        enableMultiSort={true}
+      />
     </main>
   )
 }

@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-table": "^8.16.0",
+    "material-ui-popup-state": "^2.0.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.17",
+    "@mui/material": "^5.15.17",
+    "@tanstack/react-table": "^8.15.3",
     "axios": "^1.6.8",
     "dayjs": "^1.11.11",
     "next": "13.5.6",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
