@@ -1,17 +1,17 @@
 "use client";
 
 export const columns = [
-  // {
-  //   accessorKey: "id",
-  //   header: "ID",
-  //   cell: (info: any) => info.getValue(),
-  // },
-  // {
-  //   accessorKey: "lastName",
-  //   header: "苗字",
-  //   cell: (info: any) => info.getValue(),
-  //   // enableSorting: false
-  // },
+  {
+    accessorKey: "id",
+    header: "ID",
+    cell: (info: any) => info.getValue(),
+  },
+  {
+    accessorKey: "lastName",
+    header: "苗字",
+    cell: (info: any) => info.getValue(),
+    // enableSorting: false
+  },
   {
     accessorKey: "firstName",
     header: "名前",
@@ -55,5 +55,5 @@ export const rows = [
   { id: 7, firstName: '潤', lastName: '松本', age: 10, score: 97, birth: 'September 1, 1997', description:"", gender: '', delete: '削除' },
   { id: 8, firstName: 'Kazuya', lastName: 'Ninomiya', age: 18, score: 90, birth: '1983年6月17日', description:"", gender: '', delete: '削除' },
   { id: 9, firstName: '誠', lastName: '大野', age: 10, score: 92, birth: '1998年3月1日', description:"", gender: 'male', delete: '削除' },
-  { id: 9, firstName: '智史', lastName: '相葉', age: 40, score: 88, birth: '1980年1月24日', description:"", gender: 'female', delete: '削除' }
+  { id: 10, firstName: '智史', lastName: '相葉', age: 40, score: 88, birth: '1980年1月24日', description:"", gender: 'female', delete: '削除' }
 ];
