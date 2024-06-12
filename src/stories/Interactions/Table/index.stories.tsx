@@ -8,7 +8,7 @@ import TanStackTable from '@/app/components/TanStackTable';
  * TanStack Table は headless UIです。"機能"のみを提供し、デザインはユーザーが自由にカスタマイズできます。
  */
 const meta: Meta<typeof TanStackTable> = {
-  title: 'Partial/Table',
+  title: 'Interaction Tests/Table',
   component: TanStackTable,
   tags: ['autodocs'], // このStoriesのドキュメンをを自動生成
   parameters: {
