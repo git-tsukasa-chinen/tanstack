@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ColumnDef, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
-import { Table, TableContainer, Typography, Box } from "@mui/material";
+import { Table, TableContainer} from "@mui/material";
 
 import { TableController } from "./TableController";
 import { TableHeader } from "./TableHeader";
@@ -105,9 +105,6 @@ function TanStackTable<T>({
 
   return (
     <div>
-      <Box sx={{backgroundColor: '#e2f2ff'}} padding={1} borderRadius={1} mb={4}>
-        <Typography variant="subtitle1">TanStack Table</Typography>
-      </Box>
       <TableContainer>
         <TableController table={table} />
         <Table>
