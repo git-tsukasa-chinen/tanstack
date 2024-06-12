@@ -8,14 +8,26 @@ type Props<T> = {
   height?: number;
   checkboxSelection?: boolean;
   enableRowSelectionOnClick?: boolean;
+  enableStripedRow?: boolean;
 }
 
-export function TableContents<T>({rowModel, height, checkboxSelection = true, enableRowSelectionOnClick = true }: Props<T>) {
+export function TableContents<T>({
+  rowModel,
+  height,
+  checkboxSelection,
+  enableRowSelectionOnClick,
+  enableStripedRow
+}: Props<T>) {
   return (
       <TableBody>
         {
-          rowModel.rows.map((row) => (
-            <Row key={row.id} height={height} onClick={enableRowSelectionOnClick ? row.getToggleSelectedHandler() : undefined}>
+          rowModel.rows.map((row, index) => (
+            <Row
+              key={row.id}
+              height={height}
+              onClick={enableRowSelectionOnClick ? row.getToggleSelectedHandler() : undefined}
+              enableStripedRow={enableStripedRow && index % 2 === 0 ? true : false}
+            >
               {checkboxSelection && (
                 <CheckboxCell
                   checked={row.getIsSelected()}
