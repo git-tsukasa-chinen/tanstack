@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Table, TableContainer, Stack, Typography, Select, MenuItem, IconButton } from "@mui/material";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
-import { ColumnDef, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
+import { Box, Chip, List, ListItem, ListItemText, Popover, Switch, Table, TableContainer, Stack } from "@mui/material";
+import { ColumnDef, ColumnFilter, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table';
+import { bindPopover, bindTrigger, usePopupState } from "material-ui-popup-state/hooks";
+
 import { TableController } from "./TableController";
 import { TableHeader } from "./TableHeader";
 import { TableContents } from "./TableContents";
+import { Pagination } from "./Pagination";
 
 type customColumnDef<T> = ColumnDef<T> & {
   id?: never;
@@ -29,6 +29,7 @@ type Props<T> = {
   enableMultiSort?: boolean; // 複数ソートの有効化
   sortDescFirst?: boolean; // ソート時の初期値を降順にするか
   enableStripedRow?: boolean; // ストライプテーブル
+  pageSizes: number[]; // 表示数の選択肢
 };
 
 function TanStackTable<T>({
@@ -44,7 +45,13 @@ function TanStackTable<T>({
   enableMultiSort = true,
   sortDescFirst = false,
   enableStripedRow = true,
+  pageSizes = [10, 30, 50, 100]
 }: Props<T>) {
+
+  const popupState = usePopupState({
+    variant: "popover",
+    popupId: 'popup-filtering',
+  });
 
   /** Column Visibility */
   const [columnVisibility, setColumnVisibility] = useState<{ [key: string]: boolean }>(() => {
@@ -66,8 +73,11 @@ function TanStackTable<T>({
   /** Pagination */
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 3, // Show 3 rows per page
+    pageSize: pageSizes[0],
   });
+
+  /** Column Filtering */
+  const [columnFilters, setColumnFilters] = useState<ColumnFilter[]>([])
 
   /** Init Table */
   const table = useReactTable({
@@ -85,12 +95,15 @@ function TanStackTable<T>({
     onPaginationChange: setPagination,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
+    // onColumnFiltersChange: setColumnFilters,
+    // enableColumnFilters: true,
     // manualSorting: true, // Server-side sorting
     state: {
       columnVisibility,
       pagination,
       rowSelection,
-      sorting
+      sorting,
+      columnFilters
     },
     debugTable: false,
     debugHeaders: false,
@@ -104,26 +117,43 @@ function TanStackTable<T>({
     setSelectedRows(_selectedRowData);
   }, [rowSelection, table]);
 
-  const total = table.getRowCount();
-  const from = pagination.pageIndex * pagination.pageSize + 1;
-  const to = (pagination.pageIndex + 1) * pagination.pageSize < total ? (pagination.pageIndex + 1) * pagination.pageSize : total;
-
-  // useEffect(() => {
-  //   console.log(selectedRows);
-  // }, [selectedRows]);
-
-  // useEffect(() => {
-  //   const sortedRows = table.getSortedRowModel().rows.map((row) => row.original);
-  //   console.log('Sorting:', sorting);
-  //   console.table(sorting);
-  //   console.log('Sorted Rows:');
-  //   console.table(sortedRows);
-  // }, [sorting, table]);
-
   return (
     <div>
       <TableContainer>
         <TableController table={table} />
+        <Chip
+          size="small"
+          label={
+            <Stack spacing={1} direction="row" alignItems="center">
+              <Box>絞り込み</Box>
+            </Stack>
+          }
+          {...bindTrigger(popupState)}
+        />
+        <Popover
+          {...bindPopover(popupState)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+        >
+          <Box sx={{ p: 2, width: 200 }}>
+            <List>
+              <Box>
+                <ListItem>
+                    <Stack direction="row" alignItems="center" spacing={1} sx={{ width: "100%" }}>
+                      <ListItemText sx={{ flexGrow: 1 }}>男性のみ</ListItemText>
+                    </Stack>
+                </ListItem>
+              </Box>
+            </List>
+          </Box>
+        </Popover>
+
         <Table>
           <TableHeader
             table={table}
@@ -140,71 +170,11 @@ function TanStackTable<T>({
             enableStripedRow={enableStripedRow}
           />
         </Table>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          sx={{ height: 32, width: "100%", pr: 6 }}
-        >
-          <Typography>{from}件目から{to}件目を表示 (全{total}件)</Typography>
-          <Stack direction="row" alignItems="center">
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <Typography id="page-size" variant="subtitle2">表示数</Typography>
-              <Select
-                inputProps={{ tabIndex: -1 }}
-                labelId="page-size"
-                variant="standard"
-                disableUnderline
-                value={table.getState().pagination.pageSize}
-                onChange={(e) => {
-                  table.setPageSize(Number(e.target.value))
-                }}
-              >
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={6}>6</MenuItem>
-                <MenuItem value={9}>9</MenuItem>
-                <MenuItem value={12}>12</MenuItem>
-                <MenuItem value={30}>30</MenuItem>
-              </Select>
-            </Stack>
-            <IconButton
-              aria-label="最初のページ"
-              tabIndex={-1}
-              size="small"
-              disabled={!table.getCanPreviousPage()}
-              onClick={() => table.firstPage()}
-            >
-              <KeyboardDoubleArrowLeftIcon fontSize="inherit" />
-            </IconButton>
-            <IconButton
-              aria-label="前ページ"
-              tabIndex={-1}
-              size="small"
-              disabled={!table.getCanPreviousPage()}
-              onClick={() => table.previousPage()}
-            >
-              <ChevronLeft fontSize="inherit" />
-            </IconButton>
-            <IconButton
-              aria-label="次ページ"
-              tabIndex={-1}
-              size="small"
-              disabled={!table.getCanNextPage()}
-              onClick={() => table.nextPage()}
-            >
-              <ChevronRight fontSize="inherit" />
-            </IconButton>
-            <IconButton
-              aria-label="最後のページ"
-              tabIndex={-1}
-              size="small"
-              disabled={!table.getCanNextPage()}
-              onClick={() => table.lastPage()}
-            >
-              <KeyboardDoubleArrowRightIcon fontSize="inherit" />
-            </IconButton>
-          </Stack>
-        </Stack>
+        <Pagination
+          table={table}
+          pagination={pagination}
+          pageSizes={pageSizes}
+        />
       </TableContainer>
     </div>
   );

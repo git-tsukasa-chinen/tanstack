@@ -8,7 +8,7 @@ export function TableController<T>({table}: Props<T>) {
   const allColumns = table.getAllColumns();
   return (
     <>
-      <ColumnVisibility allColumns={allColumns} popupId="column-visibility" />  
+      <ColumnVisibility allColumns={allColumns} popupId="column-visibility" />
     </>
   )
 }
