@@ -27,22 +27,22 @@ export const columns = [
     header: "点数",
     cell: (info: any) => info.getValue(),
   },
-  {
-    accessorKey: "birth",
-    header: "誕生日",
-    cell: (info: any) => info.getValue(),
-  },
+  // {
+  //   accessorKey: "birth",
+  //   header: "誕生日",
+  //   cell: (info: any) => info.getValue(),
+  // },
   {
     accessorKey: "gender",
     header: "性別",
     cell: (info:any) => info.getValue(),
   },
-  {
-    accessorKey: "delete",
-    header: "削除",
-    cell: (info:any) => info.getValue(),
-    enableHiding: true // カラムの表示/非表示をユーザーが切替できるか
-  },
+  // {
+  //   accessorKey: "delete",
+  //   header: "削除",
+  //   cell: (info:any) => info.getValue(),
+  //   enableHiding: true // カラムの表示/非表示をユーザーが切替できるか
+  // },
 ];
 
 export const rows = [

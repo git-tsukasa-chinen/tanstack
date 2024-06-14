@@ -1,8 +1,9 @@
 import { Table, flexRender, SortingState } from '@tanstack/react-table';
-import { Box, Badge, IconButton, TableHead, TableCell } from "@mui/material";
-import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
+import { Box, TableHead, TableCell } from "@mui/material";
+
 import { Row } from "../Row";
 import { CheckboxCell } from "../Cell/CheckboxCell";
+import { SortIcon, FilterIcon, MoreIcon } from '../Icon';
 
 type Props<T> = {
   table: Table<T>;
@@ -10,10 +11,6 @@ type Props<T> = {
   checkboxSelection?: boolean;
   enableSorting?: boolean;
   sorting: SortingState
-}
-
-function sortIndex( sorting: SortingState, columnId: string ) : number {
-  return sorting.findIndex( s => s.id === columnId ) + 1;
 }
 
 export function TableHeader<T>({
@@ -39,34 +36,28 @@ export function TableHeader<T>({
             {headerGroup.headers.map((header) => (
               <TableCell
                 key={header.id}
-                onClick={header.column.getToggleSortingHandler()}
                 sx={{
-                  cursor: enableSorting ? 'pointer' : 'default',
-                  '.MuiIconButton-root': {
-                    ml: 0.5,
-                    visibility: header.column.getIsSorted() ? 'visible' : 'hidden',
-                  },
                   '&:hover .MuiIconButton-root': {
                     visibility: 'visible',
                   },
-                  '.MuiSvgIcon-root': {
-                    opacity: header.column.getIsSorted() ? 1 : 0.5,
-                  }
                 }}
               >
                 {header.isPlaceholder ? null : (
-                  <Box display="flex" alignItems="center">
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                    {enableSorting && header.column.getCanSort() &&　(
-                      <IconButton size="small" aria-label="Sort">
-                        <Badge color="default" badgeContent={ sorting.length > 1 ? sortIndex( sorting, header.column.id ) : 0 }>
-                          {header.column.getIsSorted() === 'desc' ? <ArrowDownward fontSize="inherit" /> : <ArrowUpward fontSize="inherit" /> }
-                        </Badge>
-                      </IconButton>
-                    )}
+                  <Box display="flex" alignItems="center" justifyContent="space-between">
+                    <Box>
+                      {flexRender(header.column.columnDef.header,header.getContext())}
+                      {enableSorting && header.column.getCanSort() && (
+                        <SortIcon
+                          column={header.column}
+                          sorting={sorting}
+                          isSorted={header.column.getIsSorted()}
+                        />
+                      )}
+                      <FilterIcon isFiltered={false} />
+                    </Box>
+                    <Box sx={{mr: '-10px'}}>
+                      <MoreIcon />
+                    </Box>
                   </Box>
                 )}
               </TableCell>

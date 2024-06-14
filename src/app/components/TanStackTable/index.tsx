@@ -95,7 +95,7 @@ function TanStackTable<T>({
     onPaginationChange: setPagination,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    // onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: setColumnFilters,
     // enableColumnFilters: true,
     // manualSorting: true, // Server-side sorting
     state: {
